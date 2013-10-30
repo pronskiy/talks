@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Composer</title>
+
+    <meta name="description" content="">
+    <meta name="author" content="Роман Пронский">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="reveal.js/css/reveal.min.css">
+    <link rel="stylesheet" href="http://slides.rmcreative.ru/css/theme/samdark.css" id="theme">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+        document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script><link rel="stylesheet" href="reveal.js/css/print/paper.css" type="text/css" media="print">
+
+
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="reveal.js/lib/css/github.css">
+    <script src="reveal.js/plugin/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+    <!--[if lt IE 9]>
+    <script src="reveal.js/lib/js/html5shiv.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        .reveal pre code,
+        .reveal code{
+            max-height: inherit;
+        }
+        .reveal a:not(.image) {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<!--
+HOTKEYS:
+  - s
+  - ESC
+  - b
+-->
+<div class="reveal">
+
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+<section>
+    <h2>Composer</h2>
+    <h4 style="font-size: 1.5em;">менеджер зависимостей для PHP</h4>
+    <div>
+        <img src="images/logo-composer-transparent.png" height="500">
+</section>
+<section>
+    <br>
+    <h3>Роман Пронский</h3><br>
+    <h4>Software Engineer @ EPAM Systems</h4>
+    <br>
+    <h4>Автор <a href="http://bit.ly/php-digests">PHP-дайджестов</a></h4>
+    <img src="images/logo-habr.gif" alt=""/>
+    <br>
+    <div><a href="https://twitter.com/pronskiy">@pronskiy</a></div>
+</section>
+<section>
+    <img src="images/logo-composer-transparent.png" style="">
+</section>
+<section>
+    <br><br><br><br><br><br>
+    <h3>Для чего нужен Composer?</h3>
+</section>
+<section>
+    <h3>Проблема зависимостей</h3>
+    <img src="images/dependency.png" alt=""/>
+</section>
+<section>
+<br><br><br><br>
+    <h4>"В моем фреймворке уже все есть"</h4>
+    <img src="images/zyiimfony.png" alt="Zyiimfony"/>
+</section>
+<section><div >
+<br><br><br><br>
+        <h4>Интеграция с API без использования SDK?</h4>
+        <img style="height: 100px;" src="images/aws.png" alt=""/>
+        <img style="height: 80px;" src="images/paypal.png" alt=""/>
+        <img style="height: 100px;" src="images/facebook.png" alt=""/>
+        <img style="height: 100px;" src="images/twitter-icon.png" alt=""/>
+        <img style="height: 100px;" src="images/social_google_box.png" alt=""/>
+    </div>
+    </section>
+<section><div >
+<br><br><br><br>
+        <h4>Универсальные инструменты?</h4>
+        <img src="images/phpunit.png" alt="" height="180" />
+    </div></section>
+<section>
+    <div style="position: absolute; top:200px;">
+        <h2>Управляйте зависимостями!</h2>
+    </div>
+</section>
+<section>
+    <style type="text/css">
+        .reveal table th, .reveal table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+    </style>
+    <table style="left: 4em; position: absolute;">
+        <tr>
+            <td><img src="images/perl.png" class="absolute-element" style="height: 70px;"></td>
+            <td><img src="images/cpan.png" class="absolute-element"style="height: 70px;"></td>
+        </tr>
+        <tr>
+            <td><img src="images/java_logo.png" class="absolute-element" style="height: 70px;"></td>
+            <td><img src="images/ivy.png" class="absolute-element" style="height: 70px;"></td>
+        </tr>
+        <tr>
+            <td><img src="images/python.png" class="absolute-element" style="height: 70px;"></td>
+            <td><h3>PiP</h3></td>
+        </tr>
+        <tr>
+            <td><img src="images/Ruby_logo.png" class="absolute-element" style="height: 70px;"></td>
+            <td><img src="images/bundler-detail_large.png" class="absolute-element" style="height: 70px;"> <h4>Bundler</h4></td>
+        </tr>
+        <tr>
+            <td><img src="images/JavaScript-logo.png" class="absolute-element" style="height: 80px;"></td>
+            <td>
+                <img src="images/npm1.png" class="absolute-element" style="height: 70px;">
+                <img src="images/bower-logo.png" class="absolute-element" style="height: 70px;">
+            </td>
+        </tr>
+    </table>
+</section>
+<section>
+    <div>
+        <h2>Как насчет PHP?</h2>
+        <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126541/zf-logo-mark.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 333.54279941422465px; height: 176.95845895314406px; z-index: 4; left: 314px; top: 103px;">
+        <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126542/Yii-logo-transparent.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 456.06142982711486px; height: 98.35244878876685px; z-index: 4; left: 75px; top: 463px;">
+        <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126543/symfony_black_03.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 182.13370710821542px; height: 221.61228581905846px; z-index: 4; left: 84px; top: 93px;">
+        <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126544/laravel.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 178.51863022993462px; height: 189.53641326845548px; z-index: 4; left: 633px; top: 376px;">
+        <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126546/Codeigniter.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 145px; height: 196px; z-index: 4; left: 714px; top: 88px;">
+    </div>
+</section>
+<section>
+    <section>
+        <h3>Решения не используются повторно</h3>
+        <br>
+            <ul>
+                <li>codeigniter-oauth2
+                </li>
+                <li>laravel-oauth2
+                </li>
+                <li>Symfony HWIOAuthBundle
+                </li>
+                <li>Zend_Oauth
+                </li>
+            </ul>
+        <div class="fragment">
+            <br>
+            <h4>Причины:</h4>
+            <ul>
+                <li>Как подключать?</li>
+                <li>Зависимости библиотек?</li>
+                <li>Организация кода?</li>
+            </ul>
+        </div>
+    </section>
+</section>
+<section>
+    <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126553/pear.png" class="absolute-element" style="width: 436px; height: 222px;">
+    <br>
+    <ul>
+        <li>Установка</li>
+        <pre><code>$ sudo apt-get install php-pear php5-dev
+$ sudo pear channel-discover pear.phpunit.de&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+$ sudo pear install phpunit/PHPUnit</code></pre>
+        <li>Глобально</li>
+        <li>Версии</li>
+    </ul>
+</section>
+<section>
+    <h2>Composer</h2>
+    <div>2011</div>
+    <div>
+        <br>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div>2012-2013</div>
+    <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126565/joggi.jpg" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 193.70694845752774px; height: 193.70694845752774px; z-index: 4; left: 57px; top: 147px;">
+    <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126566/nilsjpg.jpg" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 212.5057492005796px; height: 193.51762318058917px; z-index: 4; left: 283px; top: 148px;">
+    <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126567/logo-composer-transparent.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 226.62437041120347px; height: 279.5246995018961px; z-index: 4; left: 661px; top: 81px;">
+    <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126569/popularity_chart.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 908px; height: 257px; z-index: 4; left: 16px; top: 430px;">
+</section>
+<section>
+    <h3>Установка Composer</h3>
+    <br>
+    <div class="fragment">
+        <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126573/pear.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 436px; height: 222px; z-index: 4; left: 244px; top: 93px;">
+        <br>
+        <br>
+        <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126580/problem-trollface.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 408px; height: 311px; z-index: 4; left: 261px; top: 346px;">
+    </div>
+</section>
+<section>
+    <h3>Установка Composer</h3>
+    <h4>*nix</h4>
+    <pre><code>$ curl -sS https://getcomposer.org/installer | php</code></pre>
+    &#x2193;<br>
+    <div>Получим composer.phar</div>
+    <br>
+    <div class="fragment">
+        <h4>Установим глобально</h4>
+        <pre><code>$ mv composer.phar /usr/local/bin/composer</code></pre>
+        <br>
+    </div>
+    <div class="fragment">
+        <h4>Win</h4>
+        <div>
+            <a href="https://getcomposer.org/Composer-Setup.exe">Composer-Setup.exe</a>
+            <br>
+        </div>
+    </div>
+        <br>
+    <div class="fragment">
+        <pre><code>$ composer -V</code></pre>
+    </div>
+</section>
+<section>
+        <br>
+        <br>
+        <br>
+    <h2>Использование</h2>
+    <h4 class="fragment">RESTful-приложение</h4>
+</section>
+<section>
+    <h3>composer.json</h3>
+        <br>
+    <code><h4>composer init</h4></code>
+    <div>
+<pre><code>{
+     "name": "pronskiy/init",
+     "authors": [
+         {
+            "name": "Roman Pronskiy",
+            "email": "roman@pronskiy.com"
+         }
+     ],
+     "require": {
+     }
+}
+</code></pre><br>
+        <div class="fragment">
+            <h4>Добавим PHP</h4>
+    <pre><code>"require": {
+    "php":"&gt;=5.3.0"
+}</code></pre>
+        </div>
+    </div>
+</section>
+<section data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126584/packagist.png" data-background-size="contain">
+    <h2>
+        <br>
+    </h2>
+</section>
+<section data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126586/packagist_slim.png" data-background-size="contain">
+    <h2>
+        <br>
+    </h2>
+    <div>
+    </div>
+</section>
+<section>
+    <h2>composer.json</h2>
+    <br>
+       <pre><code>       {
+            "require": {
+                "php": "&gt;=5.4.0",
+                "slim/slim": "2.*"
+            }
+        }</code></pre>
+</section>
+<section data-background-image="images/slim_versions.png" data-background-size="contain">
+    <br><br>
+    <h3>Версии зависимостей</h3>
+</section>
+<section>
+    <h3>Версии зависимостей</h3>
+    <br>
+            <ul>
+                <li>
+                    1.0.2
+                </li>
+                <table>
+
+                        <tr>
+                            <td>
+                                <ul>
+                                    <li>&gt;, &gt;=, &lt;, &lt;=, !=</li>
+                                </ul></td>
+                            <td><ul>
+                                <li>&gt;=1.0&nbsp;</li>
+                                <li>&gt;=1.0,&lt;2.0&nbsp;</li>
+                                <li>&gt;=1.0,&lt;1.1 | &gt;=1.2</li>
+                            </ul></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <ul>
+                                    <li>1.0.*&nbsp;</li>
+                                </ul></td>
+                            <td><ul><li>(&gt;=1.0,&lt;1.1)</li></ul></td>
+                        </tr>
+                    </table>
+                <br>
+                <li><strong>dev</strong>-<em>branchname</em></li>
+                <li><strong>dev</strong>-<em>master#b16b00b5</em></li>
+
+            </ul>
+    <div>
+        <br>
+    </div>
+</section>
+<section>
+    <h2>Monolog &amp; RedBean</h2>
+    <div>
+        <br>
+    </div>
+    <div>
+<pre><code class="JSON">    "require": {
+        "php": "&gt;=5.3.0",
+        "slim/slim": "2.*",
+        "monolog/monolog": "dev-master",
+        "gabordemooij/redbean": "dev-master"
+    }</code></pre>
+    </div>
+</section>
+<section>
+    <section>
+        <h2>composer install</h2>
+<pre><code class="Bash">$ composer install
+    Loading composer repositories with package information
+    Installing dependencies (including require-dev)
+    - Installing psr/log (1.0.0)
+    Downloading: 100%
+
+    - Installing monolog/monolog (dev-master 6209223)
+    Cloning 620922356a36d8903d213c986568fe159b530747
+
+    - Installing gabordemooij/redbean (dev-master 95cf7d2)
+    Cloning 95cf7d231b60acdeee050041d44503df1b288b74
+
+    - Installing slim/slim (2.3.3)
+    Downloading: 100%
+
+    monolog/monolog suggests installing mlehner/gelf-php (Allow sending log messages to a GrayLog2 server)
+    monolog/monolog suggests installing ext-amqp (Allow sending log messages to an AMQP server (1.0+ required))
+    monolog/monolog suggests installing doctrine/couchdb (Allow sending log messages to a CouchDB server)
+    monolog/monolog suggests installing raven/raven (Allow sending log messages to a Sentry server)
+    Writing lock file
+    Generating autoload files</code></pre>
+    </section>
+    <section>
+        <h3>composer install</h3>
+        <br>
+        <div>
+            <ul>
+                <li>Все зависимости загружаются в vendor</li>
+                <li>Создается composer.lock</li>
+                <li>Создается autoload.php</li>
+            </ul>
+        </div>
+    </section>
+</section>
+<section>
+    <h2>public/index.php</h2>
+    <br>
+<pre><code class="php">&lt;?php
+    require __DIR__.'/../vendor/autoload.php';
+
+    $log = new \Monolog\Logger('log');
+    $log-&gt;pushHandler(new Monolog\Handler\StreamHandler('app.log',
+        Monolog\Logger::INFO));
+
+    $app = new \Slim\Slim();
+    $app-&gt;get('/hello/:name', function ($name) {
+        echo "Hello, $name";
+        $log-&gt;addInfo('It works! I &lt;3 Composer.');
+    });
+    $app-&gt;run();</code></pre>
+    <br><h4><code>%HOSTNAME%/hello/world</code></h4>
+</section>
+<section>
+    <h3>Источники пакетов</h3>
+    <br><br>
+    <div>
+        <ul>
+            <li>Packagist</li>
+            <li>Git, SVN, Hg</li>
+            <li>Файл</li>
+            <li>zip-архив</li>
+            <li>PEAR</li>
+            <li>Satis</li>
+        </ul>
+    </div>
+</section>
+<section>
+    <h3>Особенности работы с VCS</h3>
+    <br><h4>Добавлять в VCS?</h4>
+        <ul>
+            <li style="color: #008000;">&#9745; composer.json</li>
+            <li>&#9744; composer.lock</li>
+            <li style="color: red;">&#9746; vendor</li>
+        </ul>
+</section>
+<section>
+    <h3>Быстрый старт проекта</h3>
+    <br>
+<pre><code class="Bash">$ git commit -am "Init"
+$ git remote add origin git@github.com:pronskiy/slimeton.git
+$ git push -u origin master </code></pre>
+    <br>
+    Для простоты сабмитим пакет на https://packagist.org<br><br>
+    <pre><code class="Bash">$ mkdir facebook-killer
+$ composer create-project pronskiy/slimeton ./facebook-killer dev-master</code></pre>
+</section>
+<section data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126600/wordpress.png" data-background-size="contain">
+    <h2>
+        <br>
+    </h2>
+</section>
+<section>
+    <h3>Структура файлов WP</h3>
+<pre><code class="b">index.php
+license.txt
+readme.html
+wp-activate.php
+wp-admin
+wp-blog-header.php
+wp-comments-post.php
+wp-config-sample.php
+wp-content
+...
+wp-mail.php
+wp-settings.php
+wp-signup.php
+wp-trackback.php
+xmlrpc.php</code></pre>
+    <div class="fragment">
+    <a href="http://codex.wordpress.org/Giving_WordPress_Its_Own_Directory">http://codex.wordpress.org/Giving_WordPress_Its_Own_Directory</a>
+<pre><code class="b">wp-content
+index.php
+wp
+wp-config.php</code></pre>
+</code>
+</pre>
+    </div>
+</section>
+<section>
+    <h3>А как же папка vendor?</h3>
+    <br>
+    <h3>Инсталлеры!</h3>
+    <div>
+<pre><code class="php">interface InstallerInterface
+{
+    public function supports($packageType);
+    public function isInstalled($repo, $package);
+    public function install($repo, $package);
+    public function update($repo, $initial, $target);
+    public function uninstall($repo, $package);
+    public function getInstallPath($package);
+}</code></pre>
+    </div>
+</section>
+<section>
+    <h4>fancyguy/webroot-installer</h4>
+<pre><code>{"repositories": [{
+    "type": "package",
+    "package": {
+        "name": "wordpress",
+        "type": "webroot",
+        "version": "3.6",
+            "dist": {
+            "type": "zip",
+            "url": "https://github.com/WordPress/WordPress/archive/3.6.zip"
+        },
+        "require" : {
+            "fancyguy/webroot-installer": "1.0.0"
+        }
+    }
+}],
+"require": {
+    "php": "&gt;=5.3.0",
+    "wordpress": "3.6",
+    "fancyguy/webroot-installer": "1.0.0"
+},
+"extra": {
+    "webroot-dir": "wp",
+    "webroot-package": "wordpress"
+}}</code></pre>
+</section>
+<section data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126607/wp_composer_ticket.png" data-background-size="contain">
+    <h2>
+        <br>
+    </h2>
+    <div>
+        <br>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div>
+        <font color="#ffffff">
+            <a href="http://core.trac.wordpress.org/ticket/23912#no1" style="background-color: rgb(207, 226, 243);">http://core.trac.wordpress.org/ticket/23912#no1</a>
+        </font>
+    </div>
+</section>
+<section>
+    <h3>Небольшой хак</h3>
+    <br>
+    <div>
+<pre><code>    composer.json
+    composer.lock
+    vendor
+    wp</code></pre>
+    <div class="fragment">
+    <br>&#x2193;<br>
+    <pre><code>    wp-content
+    index.php
+    wp
+    wp-config.php</code></pre>
+    </div>
+    </div>
+</section>
+<section>
+    <section>
+        <h3>WordPress-плагины</h3>
+        <br>
+        <h4>composer/installers</h4>
+            <br>
+        <ul>
+            <li>
+                wordpress-plugin &#x2192; wp-content/plugins/{$name}/
+            </li>
+            <li>
+                wordpress-theme &#x2192; wp-content/themes/{$name}/
+            </li>
+            <li>
+                wordpress-muplugin &#x2192; wp-content/mu-plugins/{$name}/
+            </li>
+        </ul>
+    </section>
+    <section data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126629/wpackagist.png" data-background-size="contain">
+        <h2>
+            <br>
+        </h2>
+        <div>
+            <br>
+        </div>
+    </section>
+    <section>
+        <h4>Использование&nbsp;<a href="http://wpackagist.org/" style="font-weight: bold;">http://wpackagist.org/</a></h4>
+<pre><code>{
+    "repositories": [
+    {
+	    "type":"composer",
+	    "url":"http://wpackagist.org"
+    },
+    {
+	    "type": "package",
+	    "package": {
+		    "name": "wordpress"
+		    ...
+	    }
+    }
+    ],
+    "require": {
+	    "php": "&gt;=5.3.0",
+	    "wordpress": "3.6",
+	    "fancyguy/webroot-installer": "1.0.0",
+	    "pronskiy/wordpress-monolog": "dev-master",
+	    "wpackagist/advanced-custom-fields": "*",
+	    "wpackagist/search-exclude": "1.0.x"
+    },
+    "extra": {
+	    "webroot-dir": "wp",
+	    "webroot-package": "wordpress"
+    }
+}
+</code></pre>
+    </section>
+</section>
+<section>
+    <h2>Composer идеален?</h2>
+    <div>
+        <ul>
+            <li class="fragment">Только папка&nbsp;<a href="https://igor.io/2013/09/04/composer-vendor-directory.html">vendor</a>
+                <ul class="fragment">
+                    <li>инсталлеры</li>
+                    <li>симлинки</li>
+                    <li>скрипты</li>
+                </ul>
+            </li>
+            <br>
+            <li class="fragment">Использование памяти
+                <ul>
+                    <li>memory_limit = 1G</li>
+                </ul>
+            </li>
+            <br>
+            <li class="fragment">Проблемы безопасности: <a href="Remote%20Code%20Execution%20Vulnerability%20via%20MITM%20">1</a>, <a href="http://www.adayinthelifeof.nl/2012/10/15/installing-composer-russian-roulette/">2</a>
+            </li>
+            <br>
+            <li class="fragment">еще?</li>
+        </ul>
+    </div>
+</section>
+<section>
+        <br>
+        <br>
+        <br>
+        <br>
+    <h2>Рекомендации</h2>
+</section>
+<section>
+    <h3>Никогда не изменяйте содержимое папки vendor</h3>
+        <br>
+    <img class="fragment" src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126648/lomaj-menya-polnostu_32878260_orig_.jpg">
+</section>
+<section>
+    <section>
+        <h2>install vs update</h2>
+            <br>
+        <div>
+            <h4>composer install&nbsp;</h4>
+            <ul>
+                <li>Использует composer.lock (если есть)</li>
+                <li>По умолчанию использует только no-dev</li>
+            </ul>
+        </div>
+            <br>
+            <br>
+        <div>
+            <h4>composer update</h4>
+            <ul>
+                <li>Использует composer.json&nbsp;</li>
+                <li>Создает новый composer.lock</li>
+                <li>По умолчанию использует dev</li>
+            </ul>
+        </div>
+    </section>
+    <section>
+        <h3>Когда что использовать?</h3>
+        <br>
+        <div class="fragment">
+            <h4><code>composer update</code></h4>
+            У моих зависимостей вышли новые версии и я хочу их!
+        </div>
+            <br>
+            <br>
+        <div class="fragment">
+            <h4><code>composer install</code></h4>
+            Я задеплоил код и важно, чтоб в моем рабочем окружении, у команды и на продакшене были абсолютно одинаковые версии
+        </div>
+            <br>
+        <div class="fragment">
+            <h4><code>composer install --dev</code></h4>
+            Дев-зависимости на продакшене мне тоже нужны!
+        </div>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Satis</h2>
+        <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126659/satis.png">
+    </section>
+    <section>
+        <h4>Установка Satis</h4>
+        <pre><code>composer.phar create-project composer/satis --stability=dev</code></pre>
+        <br>
+        <h4>Конфигурируем satis.json</h4>
+<pre><code>{
+    "name": "My Repository",
+    "homepage": "http://packages.example.org",
+    "repositories": [
+        { "type": "vcs", "url": "http://github.com/mycompany/privaterepo"},
+        { "type": "vcs", "url": "http://svn.example.org/private/repo"},
+        { "type": "vcs", "url": "http://github.com/mycompany/privaterepo2"}
+    ],
+    "require-all": true
+}</code></pre>
+        <h4>Билдим</h4>
+            <pre><code>php bin/satis build satis.json web/ </code></pre>
+        <h4>Веб-сервер</h4>
+            <pre><code>php -S localhost:8888 -t web/ </code></pre>
+    </section>
+    <section>
+        <h3>Используем Satis-репозиторий</h3>
+        <br>
+<pre><code>{
+    "repositories": [
+    	{
+            "type": "composer",
+            "url": "http://packages.example.org/"
+    	}
+    ],
+    "require": {
+        "company/package": "1.2.0",
+        "company/package2": "1.5.2",
+        "company/package3": "dev-master"
+    }
+} </code></pre>
+    </section>
+    <section>
+        <h3>Satis в качестве зеркала</h3>
+        <br>
+<pre><code>{
+    "name": "My Repository",
+    "homepage": "http://packages.example.org",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/zendframework/zf2.git"
+        }
+    ],
+    "require": {
+        "zendframework/zendframework": "&gt;=2.2.0"
+    },
+    "archive": {
+        "directory": "dist"
+    }
+}</code></pre>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Скрипты</h2>
+        <div>
+            <br>
+        </div>
+        <div>
+            <div>
+                <ul>
+                    <li>
+                        <span style="text-align: center;">pre-install-cmd&nbsp;</span>
+                        <br>
+                    </li>
+                    <li>
+                        <span style="text-align: center;">post-install-cmd&nbsp;</span>
+                        <br>
+                    </li>
+                    <li>
+                        <span style="text-align: center;">pre-update-cmd</span>
+                        <br>
+                    </li>
+                    <li>
+                        <span style="text-align: center;">post-update-cmd</span>
+                        <br>
+                    </li>
+                    <li>
+                        <span style="text-align: center;">post-create-project-cmd</span>
+                        <br>
+                    </li>
+                </ul>
+            </div>
+
+
+
+
+        </div>
+    </section>
+    <section>
+        <h3>Аккуратнее со скриптами</h3>
+            <br>
+            <br>
+            <br>
+            <div class="fragment">{"scripts": {"post-install-cmd": "rm -rf /"}}</div>
+            <br>
+            <div class="fragment">{"scripts": {"post-install-cmd": "apt-get uninstall php"}}</div>
+            <div class="fragment">{"scripts": {"post-install-cmd": "apt-get install ruby"}}<br>
+            <br>
+            <div class="fragment">
+                <pre><code>$ composer install --no-scripts</code></pre>
+                <pre><code>$ composer run-script post-update-cmd</code></pre>
+            </div>
+                <br><br><br>
+            <font style="font-size: 24px;">За примеры спасибо <a href="http://blog.evercodelab.com/php-frameworks-day-2013/">Роману Лапину</a>
+            </font>
+        </div>
+    </section>
+</section>
+<section>
+    <br><br>
+    <h4>Обновляйте сам композер</h4>
+        <pre><code>$ composer self-update </code></pre>
+        <br>
+        <br>
+    <h4>Все сломалось?</h4>
+<pre><code>$ rm -rf vendor/
+$ composer update -v </code></pre>
+</section>
+<section data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126677/cheatsheet.png" data-background-size="contain">
+        <br><br> <br><br>
+        <br><br><br><br>
+        <br> <br><br> <br>
+        <br> <br> <br>
+    <div>
+<span style="background-color: rgba(255, 255, 255, 0.0470588);">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<font style="font-size: 24px;">
+    <a href="http://composer.json.jolicode.com/">http://composer.json.jolicode.com/</a>
+</font>
+</span>
+        <br>
+    </div>
+    <br>
+</section>
+<section>
+    <section>
+        <h3>Визуализируйте зависимости</h3>
+            <a href="https://github.com/clue/graph-composer">https://github.com/clue/graph-composer</a>
+            <br>
+            <br>
+        <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126687/graphvizUxJaCw.png" style="width: 963.3997984071752px; height: 208.71969934097632px; max-height: none; max-width: none; position: absolute; z-index: 4; left: -19px; top: 165px;" class="absolute-element">
+    </section>
+    <section>
+        <h3>Визуализируйте зависимости</h3>
+            <a href="http://redotheweb.com/DependencyWheel/">http://redotheweb.com/DependencyWheel/</a>
+            <br>
+        <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126692/dependencyweel.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 755px; height: 668px; z-index: 4; left: 91px; top: 116px;">
+    </section>
+</section>
+<section>
+    <section>
+        <h3>Читайте PHP-дайджесты</h3>
+        <a href="http://bit.ly/php-digests">bit.ly/php-digests</a>
+        <br>
+        <br>
+        <img style="zoom:0.5" src="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126698/elephant.png">
+    </section>
+    <section>
+        <h3>Поиск по дайджестам</h3>
+        <div>
+            <a href="http://pronskiy.github.io/php-digest/">http://pronskiy.github.io/php-digest/</a>
+            <br>
+        </div>
+    </section>
+    <section data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/pronskiy/images/126705/digests-search.png" data-background-size="contain">
+    </section>
+</section>
+<section data-background-image="images/questions.jpg" data-background-size="stretch">
+    <h2 style="color: #ffffff; background-color: #002b36;">Спасибо за внимание!</h2>
+        <br> <br> <br><br>
+        <br><br><br><br>
+        <br> <br> <br><br>
+        <a style="color: #ffffff" href="https://twitter.com/pronskiy">@pronskiy</a>
+</section>
+
+</div>
+</div>
+
+<script src="reveal.js/lib/js/head.min.js"></script>
+<script src="reveal.js/js/reveal.min.js"></script>
+
+<script>
+
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: false,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+        backgroundTransition: 'slide',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            //{ src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            //{ src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            //{ src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            //{ src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+            //{ src: 'reveal.js/plugin/highlight/highlight2.js', async: false, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+    });
+
+</script>
+
+</body></html>
